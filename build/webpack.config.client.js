@@ -20,7 +20,7 @@ const devServer = {
   port: 8000,
   host: '0.0.0.0',
   overlay: {
-      errors: true,
+    errors: true
   },
   historyApiFallback: {
     index: '/public/index.html'
@@ -28,9 +28,9 @@ const devServer = {
   hot: true
 }
 
-let config 
+let config
 
-if(isDev) {
+if (isDev) {
   config = merge(baseConfig, {
     devtool: '#cheap-module-eval-source-map',
     devServer,
@@ -47,54 +47,54 @@ if(isDev) {
             },
             'stylus-loader'
           ]
-        },
+        }
       ]
     },
     plugins: defaultPlugins.concat(
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoEmitOnErrorsPlugin()
+      new webpack.HotModuleReplacementPlugin()
+      // new webpack.NoEmitOnErrorsPlugin()
     )
   })
 
 } else {
   config = merge(baseConfig, {
     entry: {
-        app: path.join(__dirname, '../client/index.js'),
-        vendor: ['vue']
+      app: path.join(__dirname, '../client/index.js')
+      // vendor: ['vue']
     },
     output: {
-        filename: '[name].[chunkhash:8].js'
+      filename: '[name].[chunkhash:8].js'
     },
     module: {
-        rules: [
-            {
-                test: /\.styl/,
-                use: ExtractPlugin.extract({
-                    fallback: 'vue-style-loader',
-                    use: [
-                        'css-loader',
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        },
-                        'stylus-loader'
-                    ]
-                })
-            }
-        ]
+      rules: [
+        {
+          test: /\.styl/,
+          use: ExtractPlugin.extract({
+            fallback: 'vue-style-loader',
+            use: [
+              'css-loader',
+              {
+                loader: 'postcss-loader',
+                options: {
+                  sourceMap: true
+                }
+              },
+              'stylus-loader'
+            ]
+          })
+        }
+      ]
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all'
+      },
+      runtimeChunk: true
     },
     plugins: defaultPlugins.concat([
-        new ExtractPlugin('styles.[contentHash:8].css'),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor'
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'runtime'
-        })
+      new ExtractPlugin('styles.[chunkhash:8].css')
     ])
-  });
+  })
 }
 
 module.exports = config

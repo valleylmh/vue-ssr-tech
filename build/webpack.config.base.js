@@ -1,6 +1,7 @@
 const path = require('path')
 
 const config = {
+  mode: process.env.NODE_ENV || 'production', // mode 接收两个值
   target: 'web',
   entry: path.join(__dirname, '../client/index.js'),
   output: {
@@ -13,7 +14,7 @@ const config = {
         test: /\.(vue|js|jsx)$/,
         loader: 'eslint-loader',
         exclude: /node_modules/,
-        enforce: 'pre'  // 强制在文件编译前预处理eslint
+        enforce: 'pre' // 强制在文件编译前预处理eslint
       },
       {
         test: /\.vue$/,
@@ -50,7 +51,5 @@ const config = {
     ]
   }
 }
-
-
 
 module.exports = config
