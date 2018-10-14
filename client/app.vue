@@ -16,7 +16,7 @@ export default {
   components: {
     Header,
     Footer,
-    Todo,
+    Todo
   }
 }
 </script>
@@ -40,5 +40,3 @@ export default {
   z-index -1
 }
 </style>
-
-

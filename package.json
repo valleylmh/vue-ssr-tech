@@ -6,17 +6,21 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
-    "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.client.js"
+    "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.config.client.js",
+    "build": "npm run clean && npm run build:client",
+    "clean": "rimraf dist",
+    "lint": "eslint --ext .js --ext .jsx --ext .vue client/",
+    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue client/"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vue": "^2.5.17",
-    
+    "vue": "^2.5.17"
   },
   "devDependencies": {
     "autoprefixer": "7.2.3",
     "babel-core": "6.26.0",
+    "babel-eslint": "^8.2.3",
     "babel-helper-vue-jsx-merge-props": "2.0.3",
     "babel-loader": "7.1.2",
     "babel-plugin-syntax-jsx": "6.18.0",
@@ -24,10 +28,19 @@
     "babel-preset-env": "1.6.1",
     "cross-env": "^5.2.0",
     "css-loader": "^0.28.7",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-html": "^4.0.3",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0",
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "postcss-loader": "2.0.9",
+    "rimraf": "^2.6.2",
     "style-loader": "^0.23.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",

@@ -10,11 +10,17 @@ const config = {
   module: {
     rules: [
       {
-        test: /.vue$/,
+        test: /\.(vue|js|jsx)$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        enforce: 'pre'  // 强制在文件编译前预处理eslint
+      },
+      {
+        test: /\.vue$/,
         loader: 'vue-loader'
       },
       {
-        test: /.jsx$/,
+        test: /\.jsx$/,
         loader: 'babel-loader'
       },
       {
@@ -23,14 +29,14 @@ const config = {
         exclude: /node_modules/
       },
       {
-        test: /.css$/,
+        test: /\.css$/,
         use: [
           'style-loader',
           'css-loader'
         ]
       },
       {
-        test: /.(jpg|jpeg|png|gif|svg)$/,
+        test: /\.(jpg|jpeg|png|gif|svg)$/,
         use: [
           {
             loader: 'url-loader',
