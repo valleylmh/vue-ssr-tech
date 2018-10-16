@@ -7,8 +7,9 @@ const config = {
   target: 'web',
   entry: path.join(__dirname, '../client/index.js'),
   output: {
-    filename: 'bundle.js',
-    path: path.join(__dirname, '../dist')
+    filename: 'bundle.[hash:8].js',
+    path: path.join(__dirname, '../public'),
+    publicPath: 'http://127.0.0.1:8000/public/'
   },
   module: {
     rules: [
@@ -33,20 +34,13 @@ const config = {
         exclude: /node_modules/
       },
       {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.(jpg|jpeg|png|gif|svg)$/,
+        test: /\.(gif|jpg|jpeg|png|svg)$/,
         use: [
           {
             loader: 'url-loader',
             options: {
               limit: 1024,
-              name: 'resource/[path][name].[hash].[ext]'
+              name: 'resources/[path][name].[hash:8].[ext]'
             }
           }
         ]

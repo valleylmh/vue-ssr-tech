@@ -1,6 +1,5 @@
 # vue-ssr-tech
-
-> A Vue.js project
+这是根据Jocky老师在慕课网上[Vue核心技术 Vue+Vue-Router+Vuex+SSR实战精讲](https://coding.imooc.com/class/196.html)课程来学习的代码
 
 ## Build Setup
 
@@ -17,5 +16,3 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

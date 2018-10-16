@@ -6,18 +6,30 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "practice": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.practice.js",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.config.client.js",
     "build": "npm run clean && npm run build:client",
     "clean": "rimraf dist",
     "lint": "eslint --ext .js --ext .jsx --ext .vue client/",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue client/",
-    "precommit": "npm run lint-fix"
+    "precommit": "npm run lint-fix",
+    "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
+    "dev:server": "cross-env NODE_ENV=development node server/server.js"
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valleylmh/vue-ssr-tech.git"
+  },
   "dependencies": {
-    "vue": "^2.5.17"
+    "axios": "^0.18.0",
+    "ejs": "^2.6.1",
+    "koa": "^2.5.3",
+    "koa-router": "^7.4.0",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1",
+    "vue-server-renderer": "^2.5.17",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "7.2.3",
@@ -25,6 +37,7 @@
     "babel-eslint": "^8.2.3",
     "babel-helper-vue-jsx-merge-props": "2.0.3",
     "babel-loader": "7.1.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-syntax-jsx": "6.18.0",
     "babel-plugin-transform-vue-jsx": "3.5.0",
     "babel-preset-env": "1.6.1",
@@ -42,14 +55,15 @@
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^0.14.3",
+    "memory-fs": "^0.4.1",
     "postcss-loader": "2.0.9",
     "rimraf": "^2.6.2",
     "style-loader": "^0.23.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "url-loader": "^1.1.2",
-    "vue-template-compiler": "^2.5.17",
     "vue-loader": "^13.6.0",
+    "vue-template-compiler": "^2.5.17",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.9.7",
     "webpack-merge": "^4.1.4"
