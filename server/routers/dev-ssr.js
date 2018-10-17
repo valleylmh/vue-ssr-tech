@@ -19,7 +19,7 @@ serverCompiler.watch({}, (err, stats) => {
   if (err) throw err
   // webpack 报错的相关设置 输出和警告
   stats = stats.toJson()
-  // stats.errors.forEach(err => console.log(err))
+  stats.errors.forEach(err => console.log(err))
   stats.warnings.forEach(warn => console.warn(err))
 
   const bundlePath = path.join(
@@ -39,7 +39,8 @@ const handleSSR = async (ctx) => {
   const clientManifestResp = await axios.get(
     'http://127.0.0.1:8000/public/vue-ssr-client-manifest.json'
   )
-  const clientMainfest = clientManifestResp.data // 带有script标签注入到ejs模板里面
+  // 带有script标签注入到ejs模板里面
+  const clientManifest = clientManifestResp.data
 
   const template = fs.readFileSync(
     path.join(__dirname, '../server.template.ejs'),
@@ -49,8 +50,9 @@ const handleSSR = async (ctx) => {
   const renderer = VueServerRenderer
     .createBundleRenderer(bundle, {
       inject: false,
-      clientMainfest
+      clientManifest
     })
+
   await serverRender(ctx, renderer, template)
 }
 

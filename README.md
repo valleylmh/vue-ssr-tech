@@ -4,11 +4,14 @@
 ## Build Setup
 
 ``` bash
-# install dependencies
+# 安装依赖包
 npm install
 
-# serve with hot reload at localhost:8081
-npm run dev
+# 客户client端服务热重载 at localhost:8000
+npm run dev:client
+
+# 服务server端服务热重载 at localhost:3333
+npm run dev:server
 
 # build for production with minification
 npm run build
