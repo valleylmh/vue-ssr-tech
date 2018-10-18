@@ -1,13 +1,14 @@
 const ejs = require('ejs')
 
-module.exports = async (ctx, renderer, template) => {
+module.exports = async (ctx, renderer, template, bundle) => {
   ctx.headers['Content-Type'] = 'text/html'
 
   const context = { url: ctx.path }
 
   try {
-    const appString = await renderer.renderToString(context)
-
+    // const appString = await renderer.renderToString(context)
+    const app = await bundle(context)
+    const appString = await renderer.renderToString(app, context)
     const {
       title
     } = context.meta.inject()
