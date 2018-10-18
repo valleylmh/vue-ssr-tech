@@ -13,6 +13,9 @@ import Footer from './views/footer.jsx'
 import Todo from './views/todo/todo.vue'
 
 export default {
+  metaInfo: {
+    title: 'Valley\'s todo app'
+  },
   components: {
     Header,
     Footer,

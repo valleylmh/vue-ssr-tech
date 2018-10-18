@@ -14,7 +14,7 @@ const defaultPlugins = [
       NODE_ENV: isDev ? '"development"' : '"production"'
     }
   }),
-  new HTMLPlugin(),
+  new HTMLPlugin({template: path.join(__dirname, 'template.html')}),
   new VueClientPlugin()
 ]
 
@@ -60,7 +60,7 @@ if (isDev) {
 } else {
   config = merge(baseConfig, {
     entry: {
-      app: path.join(__dirname, '../client/index.js'),
+      app: path.join(__dirname, '../client/client-entry.js'),
       vendor: ['vue']
     },
     output: {
