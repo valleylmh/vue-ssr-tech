@@ -19,7 +19,9 @@
       @toggle="toggleFilter"
       @clearAllCompleted="clearAllCompleted"
     />
+    <button @click="test">click me for notify</button>
   </section>
+
 </template>
 
 <script>
@@ -47,6 +49,9 @@ export default {
     }
   },
   methods: {
+    test () {
+      this.$notify()
+    },
     addTodo (e) {
       this.todos.unshift({
         id: id++,
