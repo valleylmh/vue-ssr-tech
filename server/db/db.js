@@ -16,7 +16,7 @@ const createError = (code, resp) => {
 
 const handleRequest = ({ status, data, ...rest }) => {
   if (status === 200) {
-    console.log(data)
+    // console.log(data)
     return data
   } else {
     throw createError(status, rest)

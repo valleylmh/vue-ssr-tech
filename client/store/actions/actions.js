@@ -1,6 +1,6 @@
 // import model from 'model'
 import model from '../../model/client-model'
-import notify from '../../components/notification/function'
+import notify from '../../components/Notification/function' // eslint-disable-line
 import bus from '../../util/bus'
 
 const handleError = (err) => {
@@ -38,9 +38,9 @@ export default {
       .then(data => {
         commit('addTodo', data)
         commit('endLoading')
-        notify({
-          content: '你又多了一件事要做'
-        })
+        // notify({
+        //   content: '你又多了一件事要做'
+        // })
       }).catch(err => {
         commit('endLoading')
         handleError(err)
@@ -62,9 +62,9 @@ export default {
     model.deleteTodo(id)
       .then(data => {
         commit('deleteTodo', id)
-        notify({
-          content: '你又少了一件事要做'
-        })
+        // notify({
+        //   content: '你又少了一件事要做'
+        // })
         commit('endLoading')
       }).catch(err => {
         handleError(err)
@@ -78,9 +78,9 @@ export default {
       .then(() => {
         commit('deleteAllCompleted')
         commit('endLoading')
-        notify({
-          content: '清理一下~~~'
-        })
+        // notify({
+        //   content: '清理一下~~~'
+        // })
       }).catch(err => {
         handleError(err)
         commit('endLoading')
@@ -93,9 +93,9 @@ export default {
       model.login(username, password)
         .then(data => {
           commit('doLogin', data)
-          notify({
-            content: '登录成功'
-          })
+          // notify({
+          //   content: '登录成功'
+          // })
           resolve()
           commit('endLoading')
         }).catch(err => {

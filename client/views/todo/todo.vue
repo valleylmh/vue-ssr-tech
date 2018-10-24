@@ -29,19 +29,51 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import Item from './item.vue'
 import Helper from './helper.vue'
-let id = 0
+
 export default {
+  metaInfo: {
+    title: 'The Todo App'
+  },
+  beforeRouteEnter (to, from, next) {
+    console.log('todo before enter', this)
+    next(vm => {
+      console.log('after enter vm.id is ', vm.id)
+    })
+  },
+  beforeRouteUpdate (to, from, next) {
+    console.log('todo update enter')
+    next()
+  },
+  beforeRouteLeave (to, from, next) {
+    console.log('todo leave enter')
+    next()
+  },
+  props: ['id'],
+  mounted () {
+    // console.log('todo mounted')
+    if (this.todos && this.todos.length < 1) {
+      this.fetchTodos()
+    }
+  },
+  asyncData ({ store, router }) {
+    // if (store.state.user) {
+    //   return store.dispatch('fetchTodos')
+    // }
+    router.replace('/login')
+    return Promise.resolve()
+  },
   data () {
     return {
-      todos: [],
       filter: 'all',
       stats: ['all', 'active', 'completed']
     }
   },
   components: { Item, Helper },
   computed: {
+    ...mapState(['todos']),
     filteredTodos () {
       if (this.filter === 'all') {
         return this.todos
@@ -51,16 +83,15 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'fetchTodos',
+      'addTodo',
+      'deleteTodo',
+      'updateTodo',
+      'deleteAllCompleted'
+    ]),
     handleChange (value) {
       this.filter = value
-    },
-    addTodo (e) {
-      this.todos.unshift({
-        id: id++,
-        content: e.target.value.trim(),
-        completed: false
-      })
-      e.target.value = ''
     },
     deleteTodo (id) {
       this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)

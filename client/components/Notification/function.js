@@ -10,28 +10,39 @@ const removeInstance = instance => {
   let len = notificationPool.length
   let index = notificationPool.findIndex(inst => instance.id === inst.id)
   notificationPool.splice(index, 1)
-  if (len < 1) return
+  if (len <= 1) return
   const removeHeight = instance.vm.height
   for (let i = index; i < len - 1; i++) {
-    notificationPool[i].vm.verticalOffset = parseInt(notificationPool[i].vm.verticalOffset) - removeHeight - 16
+    notificationPool[i].verticalOffset = parseInt(notificationPool[i].vm.verticalOffset) - removeHeight - 16
   }
 }
 
 const notify = (options = {}) => {
   if (Vue.prototype.$isServer) return
   const {
-    autoClose
+    autoClose,
+    ...rest
   } = options
   const instance = new NotificationConstructor({
-    propsData: {},
+    propsData: {
+      ...rest
+    },
     data: {
-      autoClose: autoClose === undefined ? 5000 : autoClose
+      autoClose: autoClose === undefined ? 3000 : autoClose
     }
   })
   instance.id = `notification_${seed++}`
   instance.vm = instance.$mount()
   document.body.appendChild(instance.vm.$el)
   instance.vm.visible = true
+
+  let verticalOffset = 0
+  notificationPool.forEach(item => {
+    verticalOffset += item.vm.$el.offsetHeight + 16
+  })
+  verticalOffset += 16
+  instance.verticalOffset = verticalOffset
+  notificationPool.push(instance) // 放入内存中
   instance.vm.$on('closed', () => {
     removeInstance(instance)
     document.body.removeChild(instance.vm.$el)
@@ -40,12 +51,6 @@ const notify = (options = {}) => {
   instance.vm.$on('close', () => {
     instance.vm.visible = false
   })
-  let verticalOffset = 0
-  notificationPool.forEach(item => {
-    verticalOffset += item.vm.$el.offsetHeight + 16
-  })
-  instance.verticalOffset = verticalOffset
-  notificationPool.push(instance) // 放入内存中
   return instance.vm
 }
 
