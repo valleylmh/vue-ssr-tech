@@ -4,7 +4,6 @@ const fs = require('fs')
 const VueServerRender = require('vue-server-renderer')
 const bundle = require('../../server-build/server-entry').default
 
-
 const serverRender = require('./server-render-no-bundle')
 const clientManifest = require('../../public/vue-ssr-client-manifest.json')
 

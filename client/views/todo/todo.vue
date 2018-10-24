@@ -1,5 +1,11 @@
 <template>
   <section class="real-app">
+    <div class="tab-container">
+      <tabs :value="filter" @change="handleChange">
+        <tab :label="tab" :index="tab" v-for="tab in stats" :key="tab"></tab>
+      </tabs>
+    </div>
+
     <input
       type="text"
       class="add-input"
@@ -13,32 +19,28 @@
       :key="todo.id"
       @del="deleteTodo"
     />
-    <tabs
+    <helper
       :filter="filter"
       :todos="todos"
-      @toggle="toggleFilter"
       @clearAllCompleted="clearAllCompleted"
     />
-    <button @click="test">click me for notify</button>
   </section>
 
 </template>
 
 <script>
 import Item from './item.vue'
-import Tabs from './tabs.vue'
+import Helper from './helper.vue'
 let id = 0
 export default {
   data () {
     return {
       todos: [],
-      filter: 'all'
+      filter: 'all',
+      stats: ['all', 'active', 'completed']
     }
   },
-  components: {
-    Item,
-    Tabs
-  },
+  components: { Item, Helper },
   computed: {
     filteredTodos () {
       if (this.filter === 'all') {
@@ -49,8 +51,8 @@ export default {
     }
   },
   methods: {
-    test () {
-      this.$notify()
+    handleChange (value) {
+      this.filter = value
     },
     addTodo (e) {
       this.todos.unshift({
@@ -99,6 +101,9 @@ export default {
   border: none;
   box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
 }
+.tab-container
+  background-color #fff
+  padding 0 15px
 </style>
 
 
