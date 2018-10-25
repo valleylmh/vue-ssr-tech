@@ -1,7 +1,7 @@
 <template>
   <section class="real-app">
     <div class="tab-container">
-      <tabs :value="filter" @change="handleChange">
+      <tabs :value="filter" @change="handleChangeTab">
         <tab :label="tab" :index="tab" v-for="tab in stats" :key="tab"></tab>
       </tabs>
     </div>
@@ -11,13 +11,14 @@
       class="add-input"
       autofocus="autofocus"
       placeholder="接下去要做什么？"
-      @keyup.enter="addTodo"
+      @keyup.enter="handleAdd"
     >
     <item
       :todo="todo"
       v-for="todo in filteredTodos"
       :key="todo.id"
       @del="deleteTodo"
+      @toggle="toggleTodoState"
     />
     <helper
       :filter="filter"
@@ -53,10 +54,9 @@ export default {
   },
   props: ['id'],
   mounted () {
-    // console.log('todo mounted')
-    if (this.todos && this.todos.length < 1) {
-      this.fetchTodos()
-    }
+    // if (this.todos && this.todos.length < 1) {
+    this.fetchTodos()
+    // }
   },
   asyncData ({ store, router }) {
     // if (store.state.user) {
@@ -90,17 +90,39 @@ export default {
       'updateTodo',
       'deleteAllCompleted'
     ]),
-    handleChange (value) {
+    handleAdd (e) {
+      const content = e.target.value.trim()
+      if (!content) {
+        this.$notify({content: '必须输入要做的内容'})
+        return
+      }
+      const todo = {
+        content,
+        completed: false
+      }
+      this.addTodo(todo)
+      e.target.value = ''
+    },
+    toggleTodoState (todo) {
+      this.updateTodo({
+        id: todo.id,
+        todo: Object.assign({}, todo, {
+          completed: !todo.completed
+        })
+      })
+    },
+    handleChangeTab (value) {
       this.filter = value
     },
-    deleteTodo (id) {
-      this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
-    },
-    toggleFilter (state) {
-      this.filter = state
-    },
+    // deleteTodo (id) {
+    //   this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
+    // },
+    // toggleFilter (state) {
+    //   this.filter = state
+    // },
     clearAllCompleted () {
-      this.todos = this.todos.filter(todo => !todo.completed)
+      this.deleteAllCompleted()
+      // this.todos = this.todos.filter(todo => !todo.completed)
     }
   }
 }

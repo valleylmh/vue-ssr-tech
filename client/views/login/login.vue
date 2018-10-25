@@ -48,6 +48,8 @@ export default {
         })
           .then(() => {
             this.$router.replace('/app')
+          }).catch((err) => {
+            this.errorMsg = err.msg
           })
       }
     },

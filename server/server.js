@@ -6,7 +6,7 @@ const koaSession = require('koa-session')
 
 const staticRouter = require('./routers/static')
 const apiRouter = require('./routers/api')
-// const userRouter = require('./routers/user')
+const userRouter = require('./routers/user')
 const createDb = require('./db/db')
 const config = require('../app.config')
 
@@ -51,7 +51,7 @@ app.use(async (ctx, next) => {
 })
 
 app.use(koaBody())
-// app.use(userRouter.routes()).use(userRouter.allowedMethods())
+app.use(userRouter.routes()).use(userRouter.allowedMethods())
 app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
 app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
 
